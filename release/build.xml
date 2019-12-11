@@ -81,15 +81,38 @@
  	<property name="jain-slee.ss7.package.name" value="jain-slee.ss7-${jain-slee.ss7.release}" />
 
 
-	<property name="gmlc.release" value="2.1.0-146" />
-	<property name="gmlc.download.url" value="https://github.com/masood-alam/gmlc/archive/${gmlc.release}.zip" />
+	<property name="smsc.release" value="7.4.0-146" />
+	<property name="smsc.download.url" value="https://github.com/masood-alam/smsc/archive/${smsc.release}.zip" />
 
- 	<property name="gmlc.package.name" value="gmlc-${gmlc.release}" />
+ 	<property name="smsc.package.name" value="smsc-${smsc.release}" />
 
-	<property name="gmlc.distro.zip.path" value="${checkout.dir}/${gmlc.package.name}.zip" />
+	<property name="smsc.distro.zip.path" value="${checkout.dir}/${smsc.package.name}.zip" />
+
+
+	<property name="jdiameter.release" value="1.7.0.97" />
+	<property name="jdiameter.download.url" value="https://github.com/restcomm/jdiameter/archive/${jdiameter.release}.zip" />
+ 	<property name="jdiameter.package.name" value="jdiameter-${jdiameter.release}" />
+	<property name="jdiameter.distro.zip.path" value="${checkout.dir}/${jdiameter.package.name}.zip" />
+
+
+	<property name="jain-slee.diameter.release" value="2.8.21" />
+	<property name="jain-slee.diameter.download.url" value="https://github.com/restcomm/jain-slee.diameter/archive/${jain-slee.diameter.release}.zip" />
+ 	<property name="jain-slee.diameter.package.name" value="jain-slee.diameter-${jain-slee.diameter.release}" />
+	<property name="jain-slee.diameter.distro.zip.path" value="${checkout.dir}/${jain-slee.diameter.package.name}.zip" />
+
+	<property name="jain-slee.sip.release" value="2.10.0-143" />
+	<property name="jain-slee.sip.download.url" value="https://github.com/restcomm/jain-slee.sip/archive/${jain-slee.sip.release}.zip" />
+ 	<property name="jain-slee.sip.package.name" value="jain-slee.sip-${jain-slee.sip.release}" />
+	<property name="jain-slee.sip.distro.zip.path" value="${checkout.dir}/${jain-slee.sip.package.name}.zip" />
+
+	<property name="jain-slee.smpp.release" value="7.1.0-91" />
+	<property name="jain-slee.smpp.download.url" value="https://github.com/restcomm/jain-slee.smpp/archive/${jain-slee.smpp.release}.zip" />
+ 	<property name="jain-slee.smpp.package.name" value="jain-slee.smpp-${jain-slee.smpp.release}" />
+	<property name="jain-slee.smpp.distro.zip.path" value="${checkout.dir}/${jain-slee.smpp.package.name}.zip" />
 
 
 	<taskdef onerror="fail" resource="net/sf/antcontrib/antlib.xml">
+
 		<classpath>
 			<pathelement location="${ant.file.restcomm.release}/../ant-contrib-1.0b3.jar" />
 		</classpath>
@@ -327,33 +350,130 @@
 
 
 
-	<available file="${gmlc.distro.zip.path}" property="got.gmlc" />
-	<target name="get-gmlc" unless="got.gmlc">
-		<echo>Downloading Gmlc</echo>
+	<available file="${smsc.distro.zip.path}" property="got.smsc" />
+	<target name="get-smsc" unless="got.smsc">
+		<echo>Downloading Smsc</echo>
 	<!--	<get dest="${ant.file.restcomm.release}/../${jain-slee.http.distro.zip.path}" src="${jain-slee.http.download.url}" />  -->
 		<exec failonerror="true" executable="wget">
-		    <arg value="${gmlc.download.url}" />
-		    <arg value="--output-document=${gmlc.distro.zip.path}" />
+		    <arg value="${smsc.download.url}" />
+		    <arg value="--output-document=${smsc.distro.zip.path}" />
 		</exec>
-	<!--	<move file="./gmlc.zip" todir="${checkout.dir}"/>  -->
+	<!--	<move file="./smsc.zip" todir="${checkout.dir}"/>  -->
 	</target>
 
-	<target name="unzip-gmlc">
-		<delete dir="${checkout.dir}/${gmlc.package.name}" failonerror="false" />
-		<unzip src="${gmlc.distro.zip.path}" dest="${checkout.dir}" />
+	<target name="unzip-smsc">
+		<delete dir="${checkout.dir}/${smsc.package.name}" failonerror="false" />
+		<unzip src="${smsc.distro.zip.path}" dest="${checkout.dir}" />
 	</target>
 
 
-	<target name="build-gmlc" description="">
-		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${gmlc.package.name}/core">
+	<target name="build-smsc" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${smsc.package.name}/core">
+			<arg line="install -Dmaven.test.skip=true -Pdeploy-module-jboss5 -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+	</target>
+
+	<target name="build-smsc-mgmt" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${smsc.package.name}/management/ui-management">
+			<arg line="install -Dmaven.test.skip=true -Pdeploy-module-jboss5 -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+	<copy file="${checkout.dir}/${smsc.package.name}/management/ui-management/target/smsc-management.war" tofile="${jboss.home}/server/default/deploy/smsc-management.war" overwrite="true" />
+
+	</target>
+
+
+	<available file="${jdiameter.distro.zip.path}" property="got.jdiameter" />
+	<target name="get-jdiameter" unless="got.jdiameter">
+		<echo>Downloading JDiameter</echo>
+		<exec failonerror="true" executable="wget">
+		    <arg value="${jdiameter.download.url}" />
+		    <arg value="--output-document=${jdiameter.distro.zip.path}" />
+		</exec>
+	</target>
+
+	<target name="unzip-jdiameter">
+		<delete dir="${checkout.dir}/${jdiameter.package.name}" failonerror="false" />
+		<unzip src="${jdiameter.distro.zip.path}" dest="${checkout.dir}" />
+	</target>
+
+	<target name="build-jdiameter" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jdiameter.package.name}/core/mux">
+			<arg line="install -Dmaven.test.skip=true -Pjboss5 -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+	</target>
+
+
+	<available file="${jain-slee.diameter.distro.zip.path}" property="got.jain-slee.diameter" />
+	<target name="get-jain-slee.diameter" unless="got.jain-slee.diameter">
+		<echo>Downloading Jain-slee.Diameter</echo>
+		<exec failonerror="true" executable="wget">
+		    <arg value="${jain-slee.diameter.download.url}" />
+		    <arg value="--output-document=${jain-slee.diameter.distro.zip.path}" />
+		</exec>
+	</target>
+
+	<target name="unzip-jain-slee.diameter">
+		<delete dir="${checkout.dir}/${jain-slee.diameter.package.name}" failonerror="false" />
+		<unzip src="${jain-slee.diameter.distro.zip.path}" dest="${checkout.dir}" />
+	</target>
+
+	<target name="build-jain-slee.diameter" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jain-slee.diameter.package.name}/resources/diameter-base">
 			<arg line="install -Dmaven.test.skip=true -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
 		</exec>
-	<copy file="${checkout.dir}/${gmlc.package.name}/management/gmlc-management/target/gmlc-management.war" tofile="${jboss.home}/server/default/deploy/gmlc-management.war" overwrite="true" />
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jain-slee.diameter.package.name}/resources/diameter-ro">
+			<arg line="install -Dmaven.test.skip=true -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+	</target>
+
+
+	<available file="${jain-slee.sip.distro.zip.path}" property="got.jain-slee.sip" />
+	<target name="get-jain-slee.sip" unless="got.jain-slee.sip">
+		<echo>Downloading Jain-slee.Sip</echo>
+		<exec failonerror="true" executable="wget">
+		    <arg value="${jain-slee.sip.download.url}" />
+		    <arg value="--output-document=${jain-slee.sip.distro.zip.path}" />
+		</exec>
+	</target>
+
+	<target name="unzip-jain-slee.sip">
+		<delete dir="${checkout.dir}/${jain-slee.sip.package.name}" failonerror="false" />
+		<unzip src="${jain-slee.sip.distro.zip.path}" dest="${checkout.dir}" />
+	</target>
+
+	<target name="build-jain-slee.sip" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jain-slee.sip.package.name}/resources/sip11">
+			<arg line="install -Dmaven.test.skip=true -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+	</target>
+
+	<available file="${jain-slee.smpp.distro.zip.path}" property="got.jain-slee.smpp" />
+	<target name="get-jain-slee.smpp" unless="got.jain-slee.smpp">
+		<echo>Downloading Jain-slee.Smpp</echo>
+		<exec failonerror="true" executable="wget">
+		    <arg value="${jain-slee.smpp.download.url}" />
+		    <arg value="--output-document=${jain-slee.smpp.distro.zip.path}" />
+		</exec>
+	</target>
+
+	<target name="unzip-jain-slee.smpp">
+		<delete dir="${checkout.dir}/${jain-slee.smpp.package.name}" failonerror="false" />
+		<unzip src="${jain-slee.smpp.distro.zip.path}" dest="${checkout.dir}" />
+	</target>
+
+	<target name="build-jain-slee.smpp" description="">
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jain-slee.smpp.package.name}/resources/smpp">
+			<arg line="clean install -Dmaven.test.skip=true -Pdu-jboss5 -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+		<exec failonerror="true" executable="${mvn.executable}" dir="${checkout.dir}/${jain-slee.smpp.package.name}/resources/smpp">
+			<arg line="install -Dmaven.test.skip=true -Pdeploy-module-jboss5 -Drelease.dir=${release.dir} -Djboss.home=${jboss.home} -Djboss.path=../../${jboss.home.relative.path}" />
+		</exec>
+
 
 	</target>
 
 
-	<target name="release" depends="get-jboss,unzip-jboss,get-jolokia,get-slee,unzip-slee,build-slee,build-slee-tools,get-restcomm-jss7,unzip-restcomm-jss7,install-restcomm-jss7-mgmt,install-restcomm-jss7-oam,get-dpklnx,unzip-dpklnx,install-gctapi,get-jmxtools,install-jmxtools,get-http,unzip-http,build-http,get-slee-ss7,unzip-slee-ss7,build-slee-ss7,get-smsc,unzip-smsc,build-smsc">
+	<target name="release" depends="get-jboss,unzip-jboss,get-jolokia,get-slee,unzip-slee,build-slee,build-slee-tools,get-restcomm-jss7,unzip-restcomm-jss7,install-restcomm-jss7-mgmt,install-restcomm-jss7-oam,get-dpklnx,unzip-dpklnx,install-gctapi,get-jmxtools,install-jmxtools,get-http,unzip-http,build-http,get-slee-ss7,unzip-slee-ss7,build-slee-ss7,get-jdiameter,unzip-jdiameter,build-jdiameter,get-jain-slee.diameter,unzip-jain-slee.diameter,build-jain-slee.diameter,get-jain-slee.sip,unzip-jain-slee.sip,build-jain-slee.sip,get-jain-slee.smpp,unzip-jain-slee.smpp,build-jain-slee.smpp,get-smsc,unzip-smsc,build-smsc">
 
 		<!-- copy log4j presets -->
 		<copy file="${jboss.home}/server/default/deploy/restcomm-slee/log4j-templates/jboss-log4j.xml.default" tofile="${jboss.home}/server/default/conf/jboss-log4j.xml" overwrite="true" />
@@ -402,7 +522,7 @@
 
 	<target name="zip-jboss" description="">
 		<fixcrlf srcdir="${jboss.home}/bin" includes="*.sh" eol="lf" eof="remove" />
-		<zip destfile="${ant.file.restcomm.release}/../jboss-${jboss.version}-gmlc.zip" filesonly="false">
+		<zip destfile="${ant.file.restcomm.release}/../jboss-${jboss.version}-smsc.zip" filesonly="false">
 			<zipfileset dir="${release.dir}" filemode="755" includes="**/*.sh" />
 			<zipfileset dir="${release.dir}" excludes="**/*.sh **/server/*/data/** **/server/*/log/** **/server/*/tmp/** **/server/*/work/** **/server/tmp/**" />
 		</zip>
