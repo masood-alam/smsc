@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE event-jar PUBLIC "-//Sun Microsystems, Inc.//DTD JAIN SLEE Event 1.1//EN" "http://java.sun.com/dtd/slee-event-jar_1_1.dtd">
+<event-jar>
+	<library-ref>
+		<library-name>org.mobicents.smsc</library-name>
+		<library-vendor>common</library-vendor>
+		<library-version>1.0.0</library-version>
+	</library-ref>
+
+	<event-definition>
+		<description>SMS event fired to Mt Service to send SMS to Mobile User</description>
+		<event-type-name>org.mobicents.smsc.slee.services.smpp.server.events.SS7_SM</event-type-name>
+		<event-type-vendor>org.mobicents</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.services.smpp.server.events.SmsSetEvent</event-class-name>
+	</event-definition>
+	<event-definition>
+		<description>SMS event fired to Rx SMPP module to be delivered to ESME</description>
+		<event-type-name>org.mobicents.smsc.slee.services.smpp.server.events.SMPP_SM</event-type-name>
+		<event-type-vendor>org.mobicents</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.services.smpp.server.events.SmsSetEvent</event-class-name>
+	</event-definition>
+	<event-definition>
+		<description>SMS event fired to Rx SIP module to be delivered to SIP CLient</description>
+		<event-type-name>org.mobicents.smsc.slee.services.smpp.server.events.SIP_SM</event-type-name>
+		<event-type-vendor>org.mobicents</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.services.smpp.server.events.SmsSetEvent</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>SMS event fired to MtSbb to initiate sending of MtForwardSm</description>
+		<event-type-name>org.mobicents.smsc.slee.services.smpp.server.events.SS7_SEND_MT</event-type-name>
+		<event-type-vendor>org.mobicents</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.services.smpp.server.events.SendMtEvent</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>SMS event fired to MtSbb to initiate sending of ReportSMDeliveryStatusRequest</description>
+		<event-type-name>org.mobicents.smsc.slee.services.smpp.server.events.SS7_SEND_RSDS</event-type-name>
+		<event-type-vendor>org.mobicents</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.services.smpp.server.events.SendRsdsEvent</event-class-name>
+	</event-definition>
+
+<!--
+	<event-definition>
+		<description>Delivery TimeOut Event</description>
+		<event-type-name>javax.slee.facilities.TimerEvent</event-type-name>
+		<event-type-vendor>javax.slee</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>javax.slee.facilities.TimerEvent</event-class-name>
+	</event-definition>
+-->
+
+	<event-definition>	
+		<description>Resending of SUBMIT_SM_RESP</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.SUBMIT_SM_RESP_CHILD</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.pdu.SubmitSmResp</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of SUBMIT_SM_RESP</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.SUBMIT_SM_RESP_PARENT</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.pdu.SubmitSmResp</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of DELIVER_SM_RESP</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.DELIVER_SM_RESP_CHILD</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.pdu.DeliverSmResp</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of DELIVER_SM_RESP</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.DELIVER_SM_RESP_PARENT</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.pdu.DeliverSmResp</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of REQUEST_TIMEOUT</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.REQUEST_TIMEOUT_CHILD</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.resources.scheduler.PduRequestTimeout2</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of REQUEST_TIMEOUT</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.REQUEST_TIMEOUT_PARENT</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.resources.scheduler.PduRequestTimeout2</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of RECOVERABLE_PDU_EXCEPTION</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.RECOVERABLE_PDU_EXCEPTION_CHILD</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.type.RecoverablePduException</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of RECOVERABLE_PDU_EXCEPTION</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.RECOVERABLE_PDU_EXCEPTION_PARENT</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>com.cloudhopper.smpp.type.RecoverablePduException</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of SEND_PDU_STATUS</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.SEND_PDU_STATUS_CHILD</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.resources.scheduler.SendPduStatus2</event-class-name>
+	</event-definition>
+	<event-definition>	
+		<description>Resending of SEND_PDU_STATUS</description>
+		<event-type-name>org.restcomm.slee.resource.smpp.SEND_PDU_STATUS_PARENT</event-type-name>
+		<event-type-vendor>org.restcomm</event-type-vendor>
+		<event-type-version>1.0</event-type-version>
+		<event-class-name>org.mobicents.smsc.slee.resources.scheduler.SendPduStatus2</event-class-name>
+	</event-definition>
+</event-jar>

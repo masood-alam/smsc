@@ -1,0 +1,23 @@
+Name
+	smsc httpuser add
+
+SYNOPSIS
+	smsc httpuser add <userName> password <password> networkId <networkId>
+
+DESCRIPTION
+	This command is used to configure a new HTTP User account
+	to access the HTTP connector for submitting messages to SMSC GW.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies  an account.
+
+	Optional Parameters
+
+	password      - Password for accestting of HTTP connector.	
+	networkId     - Network ID assigned with this user account.
+	                If the value is lower than 0 or not specified, the default
+	                networkId area is used (defined in HTTP Settings section).
+
+SEE ALSO
+	smsc httpuser modify, smsc httpuser remove, smsc httpuser show
