@@ -491,7 +491,7 @@
 			<param name="jboss.home" value="${jboss.home}" />
 		</antcall>
 		<delete dir="${jboss.home}" failonerror="true" />
-		<antcall target="clean" />
+		<!--<antcall target="clean" /> -->
 	</target>
 
 	<target name="clean">
